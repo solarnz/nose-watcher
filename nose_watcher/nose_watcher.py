@@ -15,9 +15,6 @@ class WatcherPlugin(Plugin):
     # The name of the plugin
     name = PLUGIN_NAME
 
-    # The arguments we want to run nose with again.
-    args = [a for a in sys.argv if a != '--with-%s' % PLUGIN_NAME]
-
     # The inotify events we want to listen for
     inotify_events = (
         inotify.IN_ATTRIB | inotify.IN_CLOSE_WRITE | inotify.IN_CREATE |
@@ -30,12 +27,21 @@ class WatcherPlugin(Plugin):
     python_files = ('.py', '.pyx')
 
     def call(self):
-        Popen(self.args).wait()
+        args = self.get_commandline_arguments()
+        Popen(args).wait()
 
     def check_files(self, files):
         return any(f.endswith(self.python_files) for f in files)
 
-    def print_status(self):
+    def get_commandline_arguments(self, argv=None):
+        if argv is None:
+            argv = sys.argv
+
+        # The arguments we want to run nose with again.
+        args = [a for a in argv if a != '--with-%s' % PLUGIN_NAME]
+        return args
+
+    def print_status(self):  # pragma:nocover
         print('Watching for changes...\n')
 
     def finalize(self, result):

@@ -12,6 +12,8 @@ class TestNoseWatcher(unittest.TestCase):
         self.plugin = WatcherPlugin()
         self.plugin.call = Mock()
 
+
+class TestFileTypes(TestNoseWatcher):
     def test_file_types_py(self):
         self.assertTrue(self.plugin.check_files({'test.py'}))
 
@@ -26,3 +28,14 @@ class TestNoseWatcher(unittest.TestCase):
 
     def test_file_types_pyc_and_txt(self):
         self.assertFalse(self.plugin.check_files({'test.txt', 'test.pyc'}))
+
+
+class TestArgumentParsing(TestNoseWatcher):
+    def test_arguments(self):
+        args_in = ['laa', '--with-%s' % WatcherPlugin.name, '--with-cover']
+        args_out = self.plugin.get_commandline_arguments(args_in)
+
+        self.assertEqual(
+            args_out,
+            ['laa', '--with-cover']
+        )
