@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from collections import namedtuple
+import sys
 import unittest
 
-from mock import Mock
+from mock import Mock, patch
 
 from nose_watcher.nose_watcher import WatcherPlugin
 
@@ -10,6 +12,7 @@ class TestNoseWatcher(unittest.TestCase):
 
     def setUp(self):
         self.plugin = WatcherPlugin()
+        self.plugin.testing = True
         self.plugin.call = Mock()
 
 
@@ -39,3 +42,80 @@ class TestArgumentParsing(TestNoseWatcher):
             args_out,
             ['laa', '--with-cover']
         )
+
+    def test_argument_parsing_from_sys_argv(self):
+        self.assertEqual(
+            self.plugin.get_commandline_arguments(),
+            [a for a in sys.argv if a != '--with-watcher']
+        )
+
+
+class TestWatching(TestNoseWatcher):
+    @patch('inotify.watcher.AutoWatcher')
+    @patch('inotify.watcher.Threshold')
+    @patch('select.poll')
+    def test_watch_no_files_modified(self, poll_mock, threshold_patch,
+                                     watcher_mock):
+        threshold = Mock()
+        threshold_patch.return_value = threshold
+        threshold.return_value = True
+        self.plugin.finalize(None)
+
+        self.assertFalse(self.plugin.call.called)
+
+    @patch('inotify.watcher.AutoWatcher')
+    @patch('inotify.watcher.Threshold')
+    @patch('select.poll')
+    def test_watch_no_files_watched(self, poll_mock, threshold_patch,
+                                    watcher_mock):
+        threshold = Mock()
+        threshold_patch.return_value = threshold
+        threshold.return_value = True
+
+        watcher = Mock()
+        watcher_mock.return_value = watcher
+
+        watcher.num_watches.return_value = False
+        self.plugin.finalize(None)
+
+        self.assertFalse(self.plugin.call.called)
+
+    @patch('inotify.watcher.AutoWatcher')
+    @patch('inotify.watcher.Threshold')
+    @patch('select.poll')
+    def test_watch_python_files_modified(self, poll_mock, threshold_patch,
+                                         watcher_mock):
+        threshold = Mock()
+        threshold_patch.return_value = threshold
+        threshold.return_value = True
+
+        watcher = Mock()
+        watcher_mock.return_value = watcher
+
+        Event = namedtuple('Event', ['fullpath'])
+        watcher.read.return_value = [
+            Event('aaa/python.py')
+        ]
+        self.plugin.finalize(None)
+
+        self.assertTrue(self.plugin.call.called)
+
+    @patch('inotify.watcher.AutoWatcher')
+    @patch('inotify.watcher.Threshold')
+    @patch('select.poll')
+    def test_watch_text_files_modified(self, poll_mock, threshold_patch,
+                                       watcher_mock):
+        threshold = Mock()
+        threshold_patch.return_value = threshold
+        threshold.return_value = True
+
+        watcher = Mock()
+        watcher_mock.return_value = watcher
+
+        Event = namedtuple('Event', ['fullpath'])
+        watcher.read.return_value = [
+            Event('aaa/python.txt')
+        ]
+        self.plugin.finalize(None)
+
+        self.assertFalse(self.plugin.call.called)

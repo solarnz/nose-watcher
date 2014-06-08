@@ -25,6 +25,7 @@ class WatcherPlugin(Plugin):
 
     # Files ending with these suffixes will cause us to run nostests again.
     python_files = ('.py', '.pyx')
+    testing = False
 
     def call(self):
         args = self.get_commandline_arguments()
@@ -76,3 +77,6 @@ class WatcherPlugin(Plugin):
             else:
                 timeout = 1000
                 poll.unregister(watcher)
+
+            if self.testing:
+                break
