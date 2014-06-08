@@ -16,7 +16,7 @@ requirements = [
 
 setup(
     name='nose-watcher',
-    version='0.1.0',
+    version='0.1.1',
     description='A nose plugin to watch for changes within the local directory.',
     long_description=readme + '\n\n' + history,
     author='Chris Trotman',
