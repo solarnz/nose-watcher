@@ -69,6 +69,7 @@ Ready to contribute? Here's how to set up `nose-watcher` for local development.
 
     $ mkvirtualenv nose-watcher
     $ cd nose-watcher/
+    $ pip install -r requirements-testing.txt
     $ python setup.py develop
 
 4. Create a branch for local development::
