@@ -36,17 +36,17 @@ Features
   plugin `nose-watch`.
 
 
-Installation_
+Installation
 ------------
 
-.. code-block:: shell
+.. code-block:: bash
 
     pip install nose-watcher
 
 Usage
 -----
 
-.. code-block:: shell
+.. code-block:: bash
 
     nosetests --with-watcher
 
