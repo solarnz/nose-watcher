@@ -32,6 +32,12 @@ class WatcherPlugin(Plugin):
     def call(self):
         Popen(self.args).wait()
 
+    def check_files(self, files):
+        return any(f.endswith(self.python_files) for f in files)
+
+    def print_status(self):
+        print('Watching for changes...\n')
+
     def finalize(self, result):
         watcher = inotify.watcher.AutoWatcher()
         watcher.add_all(os.getcwd(), self.inotify_events)
@@ -45,6 +51,8 @@ class WatcherPlugin(Plugin):
         threshold = inotify.watcher.Threshold(watcher, 512)
         timeout = None
 
+        self.print_status()
+
         while True:
             events = poll.poll(timeout)
             files = set()
@@ -54,9 +62,9 @@ class WatcherPlugin(Plugin):
                     files.add(event.fullpath)
 
             if files:
-                if any(f.endswith(self.python_files) for f in files):
+                if self.check_files(files):
                     self.call()
-
+                    self.print_status()
                 timeout = None
                 poll.register(watcher, select.POLLIN)
             else:
