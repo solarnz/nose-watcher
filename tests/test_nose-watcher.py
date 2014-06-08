@@ -10,10 +10,10 @@ Tests for `nose-watcher` module.
 
 import unittest
 
-from nose-watcher import nose-watcher
+from nose_watcher import nose_watcher
 
 
-class TestNose-watcher(unittest.TestCase):
+class TestNoseWatcher(unittest.TestCase):
 
     def setUp(self):
         pass

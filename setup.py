@@ -32,10 +32,8 @@ setup(
     author_email='chris@trotman.io',
     url='https://github.com/solarnz/nose-watcher',
     packages=[
-        'nose-watcher',
+        'nose_watcher',
     ],
-    package_dir={'nose-watcher':
-                 'nose-watcher'},
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
