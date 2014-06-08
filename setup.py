@@ -14,11 +14,6 @@ requirements = [
     'python-inotify==0.6-test'
 ]
 
-test_requirements = [
-    # TODO: put package test requirements here
-    'nose',
-]
-
 setup(
     name='nose-watcher',
     version='0.1.0',
@@ -48,7 +43,6 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='tests',
-    tests_require=test_requirements,
     entry_points={
         'nose.plugins.0.10': [
             'watcher = nose_watcher.nose_watcher:WatcherPlugin'
