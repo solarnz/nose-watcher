@@ -23,7 +23,8 @@ A nose plugin to watch for changes within the local directory.
 Inspired by the `nose-watch <https://github.com/lukaszb/nose-watch>`_ nose
 plugin.
 
-Note: nose-watcher will only run on linux, due to the depenency on `python-inotify` and `inotify`.
+Note: nose-watcher will only run on linux, due to the depenency on
+`python-inotify` and `inotify`.
 
 Features
 --------
@@ -52,4 +53,5 @@ Usage
 Documentation
 -------------
 
-More documentation can be found at `ReadTheDocs <http://nose-watcher.rtfd.org>`_
+More documentation can be found at
+`ReadTheDocs <http://nose-watcher.rtfd.org>`_
