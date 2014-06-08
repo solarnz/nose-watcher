@@ -20,7 +20,31 @@ A nose plugin to watch for changes within the local directory.
 * Free software: BSD license
 * Documentation: http://nose-watcher.readthedocs.org.
 
+Inspired by the `nose-watch <https://github.com/lukaszb/nose-watch>`_ nose
+plugin.
+
+Note: nose-watcher will only run on linux, due to the depenency on `python-inotify` and `inotify`.
+
 Features
 --------
 
-* TODO
+* Watches for changes in the local directory, then runs nosetests with the
+  specified command line options.
+
+* Doesn't run the tests multiple times if you're using vim, Unlike the similar
+  plugin `nose-watch`.
+
+
+Installation_
+------------
+
+.. code-block:: shell
+
+    pip install nose-watcher
+
+Usage
+-----
+
+.. code-block:: shell
+
+    nosetests --with-watcher
