@@ -25,7 +25,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 nose-watcher tests
+	flake8 nose_watcher tests
 
 test:
 	python setup.py test
@@ -34,18 +34,16 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source nose-watcher setup.py test
+	coverage run --source nose_watcher setup.py test
 	coverage report -m
 	coverage html
-	open htmlcov/index.html
 
 docs:
-	rm -f docs/nose-watcher.rst
+	rm -f docs/nose_watcher.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ nose-watcher
+	sphinx-apidoc -o docs/ nose_watcher
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
-	open docs/_build/html/index.html
 
 release: clean
 	python setup.py sdist upload
