@@ -8,13 +8,15 @@ from nose.plugins import Plugin
 import inotify
 import inotify.watcher
 
+PLUGIN_NAME = 'watcher'
+
 
 class WatcherPlugin(Plugin):
     # The name of the plugin
-    name = 'watcher'
+    name = PLUGIN_NAME
 
     # The arguments we want to run nose with again.
-    args = [a for a in sys.argv if a != '--with-%s' % name]
+    args = [a for a in sys.argv if a != '--with-%s' % PLUGIN_NAME]
 
     # The inotify events we want to listen for
     inotify_events = (
