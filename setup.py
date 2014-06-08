@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-
-
 try:
     from setuptools import setup
 except ImportError:
@@ -15,7 +11,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
-    # TODO: put package requirements here
+    'python-inotify==0.6-test'
 ]
 
 test_requirements = [
@@ -52,5 +48,10 @@ setup(
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=test_requirements,
+    entry_points={
+        'nose.plugins.0.10': [
+            'watcher = nose_watcher.nose_watcher:WatcherPlugin'
+        ]
+    },
 )
