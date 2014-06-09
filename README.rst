@@ -49,9 +49,3 @@ Usage
 .. code-block:: bash
 
     nosetests --with-watcher
-
-Documentation
--------------
-
-More documentation can be found at
-`ReadTheDocs <http://nose-watcher.rtfd.org>`_

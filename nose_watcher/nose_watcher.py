@@ -61,7 +61,11 @@ class WatcherPlugin(Plugin):
         self.print_status()
 
         while True:
-            events = poll.poll(timeout)
+            try:
+                events = poll.poll(timeout)
+            except KeyboardInterrupt:
+                return
+
             files = set()
 
             if threshold() or not events:

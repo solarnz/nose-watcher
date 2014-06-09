@@ -3,6 +3,11 @@
 History
 -------
 
+0.1.2 (2014-06-09)
+---------------------
+
+* Handle KeyboardInterrupts while watching for changes.
+
 0.1.1 (2014-06-08)
 ---------------------
 
