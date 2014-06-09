@@ -14,6 +14,14 @@ Nose-Watcher
 .. image:: https://coveralls.io/repos/solarnz/nose-watcher/badge.png?branch=develop
         :target: https://coveralls.io/r/solarnz/nose-watcher?branch=develop
 
+.. image:: https://pypip.in/wheel/nose-watcher/badge.png
+        :target: https://pypi.python.org/pypi/nose-watcher/
+        :alt: Wheel Status
+
+.. image:: https://pypip.in/license/nose-watcher/badge.png
+        :target: https://pypi.python.org/pypi/nose-watcher/
+        :alt: License
+
 
 A nose plugin to watch for changes within the local directory.
 
