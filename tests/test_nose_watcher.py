@@ -50,10 +50,10 @@ class TestArgumentParsing(TestNoseWatcher):
         )
 
 
+@patch('inotify.watcher.AutoWatcher')
+@patch('inotify.watcher.Threshold')
+@patch('select.poll')
 class TestWatching(TestNoseWatcher):
-    @patch('inotify.watcher.AutoWatcher')
-    @patch('inotify.watcher.Threshold')
-    @patch('select.poll')
     def test_watch_no_files_modified(self, poll_mock, threshold_patch,
                                      watcher_mock):
         threshold = Mock()
@@ -63,9 +63,6 @@ class TestWatching(TestNoseWatcher):
 
         self.assertFalse(self.plugin.call.called)
 
-    @patch('inotify.watcher.AutoWatcher')
-    @patch('inotify.watcher.Threshold')
-    @patch('select.poll')
     def test_watch_no_files_watched(self, poll_mock, threshold_patch,
                                     watcher_mock):
         threshold = Mock()
@@ -80,9 +77,6 @@ class TestWatching(TestNoseWatcher):
 
         self.assertFalse(self.plugin.call.called)
 
-    @patch('inotify.watcher.AutoWatcher')
-    @patch('inotify.watcher.Threshold')
-    @patch('select.poll')
     def test_watch_python_files_modified(self, poll_mock, threshold_patch,
                                          watcher_mock):
         threshold = Mock()
@@ -100,9 +94,6 @@ class TestWatching(TestNoseWatcher):
 
         self.assertTrue(self.plugin.call.called)
 
-    @patch('inotify.watcher.AutoWatcher')
-    @patch('inotify.watcher.Threshold')
-    @patch('select.poll')
     def test_watch_text_files_modified(self, poll_mock, threshold_patch,
                                        watcher_mock):
         threshold = Mock()
@@ -116,6 +107,23 @@ class TestWatching(TestNoseWatcher):
         watcher.read.return_value = [
             Event('aaa/python.txt')
         ]
+        self.plugin.finalize(None)
+
+        self.assertFalse(self.plugin.call.called)
+
+    def test_watch_keyboard_interrupt(self, poll_mock, threshold_patch,
+                                      watcher_mock):
+        threshold = Mock()
+        threshold_patch.return_value = threshold
+        threshold.return_value = True
+
+        watcher = Mock()
+        watcher_mock.return_value = watcher
+
+        poll = Mock()
+        poll_mock.return_value = poll
+        poll.poll.side_effect = KeyboardInterrupt
+
         self.plugin.finalize(None)
 
         self.assertFalse(self.plugin.call.called)
