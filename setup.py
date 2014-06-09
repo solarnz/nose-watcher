@@ -10,10 +10,6 @@ except ImportError:
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = [
-    'python-inotify==0.6-test'
-]
-
 setup(
     name='nose-watcher',
     version='0.1.2',
@@ -27,7 +23,9 @@ setup(
         'nose_watcher',
     ],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[
+        'python-inotify==0.6-test'
+    ],
     license="BSD",
     zip_safe=False,
     keywords='nose-watcher',
