@@ -2,21 +2,22 @@
 Nose-Watcher
 ===============================
 
-.. image:: https://badge.fury.io/py/nose-watcher.png
-    :target: http://badge.fury.io/py/nose-watcher
-
-.. image:: https://travis-ci.org/solarnz/nose-watcher.png?branch=develop
-        :target: https://travis-ci.org/solarnz/nose-watcher
+.. image:: https://pypip.in/version/nose-watcher/badge.png
+        :target: https://pypi.python.org/pypi/nose-watcher/
+        :alt: Latest Version
 
 .. image:: https://pypip.in/d/nose-watcher/badge.png
         :target: https://pypi.python.org/pypi/nose-watcher
 
-.. image:: https://coveralls.io/repos/solarnz/nose-watcher/badge.png?branch=develop
-        :target: https://coveralls.io/r/solarnz/nose-watcher?branch=develop
-
 .. image:: https://pypip.in/wheel/nose-watcher/badge.png
         :target: https://pypi.python.org/pypi/nose-watcher/
         :alt: Wheel Status
+
+.. image:: https://travis-ci.org/solarnz/nose-watcher.png?branch=develop
+        :target: https://travis-ci.org/solarnz/nose-watcher
+
+.. image:: https://coveralls.io/repos/solarnz/nose-watcher/badge.png?branch=develop
+        :target: https://coveralls.io/r/solarnz/nose-watcher?branch=develop
 
 .. image:: https://pypip.in/license/nose-watcher/badge.png
         :target: https://pypi.python.org/pypi/nose-watcher/
