@@ -3,7 +3,7 @@
 History
 -------
 
-0.1.2 ()
+0.1.2 (2014-06-09)
 ---------------------
 
 * Handle KeyboardInterrupts while watching for changes.
