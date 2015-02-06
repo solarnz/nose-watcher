@@ -47,11 +47,13 @@ class WatcherPlugin(Plugin):
         return args
 
     def options(self, parser, env):
+        """ Configure with command line option '--filetype'. """
         Plugin.options(self, parser, env)
         parser.add_option('--filetype', action='append',
                           help='Specify additional filetypes to monitor.')
 
     def configure(self, options, conf):
+        """ Get filetype option to specify additional filetypes to watch. """
         Plugin.configure(self, options, conf)
         if options.filetype:
             self.filetypes = tuple(list(self.python_files) + options.filetype)

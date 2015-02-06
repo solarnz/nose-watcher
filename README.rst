@@ -44,6 +44,9 @@ Features
 * Doesn't run the tests multiple times if you're using vim, Unlike the similar
   plugin `nose-watch`.
 
+* Specify additional filetypes to watch using the command line argument
+  `--filetype`.
+
 
 Installation
 ------------
@@ -58,3 +61,5 @@ Usage
 .. code-block:: bash
 
     nosetests --with-watcher
+
+    nosetests --with-watcher --filetype .txt
