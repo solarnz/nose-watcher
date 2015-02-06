@@ -15,25 +15,50 @@ class TestNoseWatcher(unittest.TestCase):
         self.plugin.testing = True
         self.plugin.call = Mock()
 
+        # Test that watcher plugin will recognize user-chosen filetypes
+        self.plugin_cust = WatcherPlugin()
+        self.plugin_cust.configure(Mock(filetype=['.txt', '.dat']), Mock())
+        self.plugin_cust.testing = True
+        self.plugin_cust.call = Mock()
+
 
 class TestFileTypes(TestNoseWatcher):
     def test_file_types_py(self):
         self.assertTrue(self.plugin.check_files({'test.py'}))
+        self.assertTrue(self.plugin_cust.check_files({'test.py'}))
 
     def test_file_types_pyx(self):
         self.assertTrue(self.plugin.check_files({'test.pyx'}))
+        self.assertTrue(self.plugin_cust.check_files({'test.pyx'}))
 
     def test_file_types_pyc(self):
         self.assertFalse(self.plugin.check_files({'test.pyc'}))
+        self.assertFalse(self.plugin_cust.check_files({'test.pyc'}))
 
     def test_file_types_py_and_pyc(self):
         self.assertTrue(self.plugin.check_files({'test.py', 'test.pyc'}))
+        self.assertTrue(self.plugin_cust.check_files({'test.py', 'test.pyc'}))
 
     def test_file_types_pyc_and_txt(self):
         self.assertFalse(self.plugin.check_files({'test.txt', 'test.pyc'}))
+        self.assertTrue(self.plugin_cust.check_files({'test.txt', 'test.pyc'}))
+
+    def test_file_types_pyc_and_dat(self):
+        self.assertFalse(self.plugin.check_files({'test.dat', 'test.pyc'}))
+        self.assertTrue(self.plugin_cust.check_files({'test.dat', 'test.pyc'}))
 
 
 class TestArgumentParsing(TestNoseWatcher):
+    def test_options(self):
+        parser_mock = Mock()
+        self.plugin.options(parser_mock, Mock())
+        self.assertTrue(parser_mock.add_option.called)
+
+    def test_configure(self):
+        self.assertEqual(self.plugin.filetypes, ('.py', '.pyx'))
+        self.assertEqual(self.plugin_cust.filetypes,
+                         ('.py', '.pyx', '.txt', '.dat'))
+
     def test_arguments(self):
         args_in = ['laa', '--with-%s' % WatcherPlugin.name, '--with-cover']
         args_out = self.plugin.get_commandline_arguments(args_in)
@@ -41,6 +66,16 @@ class TestArgumentParsing(TestNoseWatcher):
         self.assertEqual(
             args_out,
             ['laa', '--with-cover']
+        )
+
+    def test_filetype_argument(self):
+        args_in = ['laa', '--with-%s' % WatcherPlugin.name, '--with-cover',
+                   '--filetype', '.js']
+        args_out = self.plugin.get_commandline_arguments(args_in)
+
+        self.assertEqual(
+            args_out,
+            ['laa', '--with-cover', '--filetype', '.js']
         )
 
     def test_argument_parsing_from_sys_argv(self):

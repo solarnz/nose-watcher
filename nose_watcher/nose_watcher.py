@@ -27,12 +27,16 @@ class WatcherPlugin(Plugin):
     python_files = ('.py', '.pyx')
     testing = False
 
+    def __init__(self):
+        Plugin.__init__(self)
+        self.filetypes = tuple(self.python_files)
+
     def call(self):
         args = self.get_commandline_arguments()
         Popen(args).wait()
 
     def check_files(self, files):
-        return any(f.endswith(self.python_files) for f in files)
+        return any(f.endswith(self.filetypes) for f in files)
 
     def get_commandline_arguments(self, argv=None):
         if argv is None:
@@ -41,6 +45,16 @@ class WatcherPlugin(Plugin):
         # The arguments we want to run nose with again.
         args = [a for a in argv if a != '--with-%s' % PLUGIN_NAME]
         return args
+
+    def options(self, parser, env):
+        Plugin.options(self, parser, env)
+        parser.add_option('--filetype', action='append',
+                          help='Specify additional filetypes to monitor.')
+
+    def configure(self, options, conf):
+        Plugin.configure(self, options, conf)
+        if options.filetype:
+            self.filetypes = tuple(list(self.python_files) + options.filetype)
 
     def print_status(self):  # pragma:nocover
         print('Watching for changes...\n')
