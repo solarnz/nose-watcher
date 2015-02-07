@@ -55,9 +55,11 @@ class TestArgumentParsing(TestNoseWatcher):
         self.assertTrue(parser_mock.add_option.called)
 
     def test_configure(self):
-        self.assertEqual(self.plugin.filetypes, ('.py', '.pyx'))
-        self.assertEqual(self.plugin_cust.filetypes,
-                         ('.py', '.pyx', '.txt', '.dat'))
+        self.assertEqual(self.plugin.filetypes, ['.py', '.pyx'])
+        self.assertEqual(
+            self.plugin_cust.filetypes,
+            ['.py', '.pyx', '.txt', '.dat']
+        )
 
     def test_arguments(self):
         args_in = ['laa', '--with-%s' % WatcherPlugin.name, '--with-cover']
