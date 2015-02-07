@@ -12,7 +12,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='nose-watcher',
-    version='0.1.2',
+    version='0.1.3',
     description='A nose plugin to watch for changes within the local'
                 ' directory.',
     long_description=readme + '\n\n' + history,

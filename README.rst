@@ -63,3 +63,8 @@ Usage
     nosetests --with-watcher
 
     nosetests --with-watcher --filetype .txt
+
+Additional Contributors
+-----------------------
+
+*  `Felix Chapman (aelred) <https://github.com/aelred>`_
