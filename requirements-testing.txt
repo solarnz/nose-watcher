@@ -1,3 +1,4 @@
 wheel
 nose
 mock
+flake8

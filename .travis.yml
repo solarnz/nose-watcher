@@ -12,7 +12,9 @@ install:
     - pip install -r requirements-testing.txt
 
 # command to run tests, e.g. python setup.py test
-script: coverage run --source nose_watcher setup.py test
+script:
+    - coverage run --source nose_watcher setup.py test
+    - flake8
 
 after_success:
       coveralls
